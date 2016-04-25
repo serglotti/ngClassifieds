@@ -1,110 +1,82 @@
 <md-toolbar class="" layout="row">
-		<div class="md-toolbar-tools">
+	<div class="md-toolbar-tools">
 
-			<p><strong>ngClassifieds</strong></p>
+		<p><strong>ngClassifieds</strong></p>
 
-			<md-button ng-click="vm.openSidebar()">
-				<md-icon class="mdi mdi-plus-circle"></md-icon>
-				New Classified
-			</md-button>
+		<md-button ng-click="vm.openSidebar()">
+			<md-icon class="mdi mdi-plus-circle"></md-icon>
+			New Classified
+		</md-button>
 
-			<md-button ng-click="showFilters = !showFilters"> <!-- toggles filter view -->
-				<md-icon class="mdi mdi-magnify"></md-icon>
-				Filter
-			</md-button>
-
-		</div>
-
-	</md-toolbar>
-
-	<!-- whenever showFilters = true, this element will be displayed -->
-	<!-- layout = "row" ensures all elements are displayed in a single row -->
-	<div class="filters" layout="row" layout-align="center center" ng-show="showFilters"> 
-
-		<md-input-container>
-		<label>Enter search term</label>
-		<!-- binds input to classifiedsfilter property. will filter on any property within a given classified object -->
-		<input type="text" ng-model="classifiedsFilter"></input>
-		</md-input-container>
-
-		<md-input-container>
-		  <label>Category</label>
-		  <md-select class="filterCategory" ng-model="category">
-		    <md-option value="{{ category }}" ng-repeat="category in vm.categories">{{ category }}</md-option>
-		  </md-select>
-		</md-input-container>
-
-		<md-input-container>
-			<md-button class="md-warn filterClear" ng-click="classifiedsFilter = ''; category = ''">
-			Clear
-			</md-button>
-		</md-input-container>
+		<md-button ng-click="showFilters = !showFilters"> <!-- toggles filter view -->
+			<md-icon class="mdi mdi-magnify"></md-icon>
+			Filter
+		</md-button>
 
 	</div>
 
-	<md-sidenav class="md-sidenav-left md-whiteframe-z2" md-component-id="left">
-		<md-toolbar>
-			<h1 class="md-toolbar-tools">Add a Classified</h1>
-		</md-toolbar>
-		<md-content layout-padding>
-			<form>
-				<md-input-container>
-				<label for="title">Title</label>
-				<input type="text" id="title" ng-model="classified.title" md-autofocus>
-				</md-input-container>
-				<md-input-container>
-				<label for="price">Price</label>
-				<input type="text" id="price" ng-model="classified.price" >
-				</md-input-container>
-				<md-input-container>
-				<label for="description">Description</label>
-				<textarea type="text" id="description" ng-model="classified.description" ></textarea>
-				</md-input-container>
-				<md-input-container>
-				<label for="image">Image Link</label>
-				<input type="text" id="image" ng-model="classified.image" >
-				</md-input-container>
-				<md-button ng-if="!editing" ng-click="vm.saveClassified(classified)" class="md-primary">Save</md-button> <!-- //passing through on-the-fly classified object that is being created by the form top the saveClassified() function in the controller -->
-				<md-button ng-if="editing" ng-click="vm.saveEdit()" class="md-primary">Save Edit</md-button>
-				<md-button class="md-warn" ng-click="vm.closeSidebar()">Cancel</md-button>
-				<pre> {{ classified | json }} </pre>
-			</form>
-		</md-content>
-	</md-sidenav>
+</md-toolbar>
 
-	<md-content class="md-padding" layout="row" layout-wrap>
-		<md-card ng-repeat="classified in vm.classifieds | filter: classifiedsFilter | filter: category" flex="30" class="classified" > <!-- added filter 07-005 -->
-			<img ng-src=" {{ classified.image }} ">
-			<md-card-content>
+<!-- whenever showFilters = true, this element will be displayed -->
+<!-- layout = "row" ensures all elements are displayed in a single row -->
+<div class="filters" layout="row" layout-align="center center" ng-show="showFilters"> 
 
-				<div class="classified-info" ng-show="!ShowContact">
-					<h2 class="md-title"> {{ classified.title }}</h2>
-					<h3> {{ classified.price | currency }} </h3>
-					<p> {{ classified.description }} </p>
-					<!-- <pre> {{ classified | json }} </pre> -->
-				</div>
+	<md-input-container>
+	<label>Enter search term</label>
+	<!-- binds input to classifiedsfilter property. will filter on any property within a given classified object -->
+	<input type="text" ng-model="classifiedsFilter"></input>
+	</md-input-container>
 
-				<div class="classified-contact" ng-show="ShowContact">
-					<p><md-icon class="mdi mdi-account"></md-icon> {{ classified.contact }}</p>
-				</div>
+	<md-input-container>
+	  <label>Category</label>
+	  <md-select class="filterCategory" ng-model="category">
+	    <md-option value="{{ category }}" ng-repeat="category in vm.categories">{{ category }}</md-option>
+	  </md-select>
+	</md-input-container>
 
+	<md-input-container>
+		<md-button class="md-warn filterClear" ng-click="classifiedsFilter = ''; category = ''">
+		Clear
+		</md-button>
+	</md-input-container>
+
+</div>
+
+<ui-view></ui-view>
+
+<md-content class="md-padding" layout="row" layout-wrap>
+	<md-card ng-repeat="classified in vm.classifieds | filter: classifiedsFilter | filter: category" flex="30" class="classified" > <!-- added filter 07-005 -->
+		<img ng-src=" {{ classified.image }} ">
+		<md-card-content>
+
+			<div class="classified-info" ng-show="!ShowContact">
+				<h2 class="md-title"> {{ classified.title }}</h2>
+				<h3> {{ classified.price | currency }} </h3>
+				<p> {{ classified.description }} </p>
+				<!-- <pre> {{ classified | json }} </pre> -->
+			</div>
+
+			<div class="classified-contact" ng-show="ShowContact">
+				<p><md-icon class="mdi mdi-account"></md-icon> {{ classified.contact }}</p>
+			</div>
+
+			<div layout="row">
+				<md-button ng-click="ShowContact = false" ng-show="ShowContact">Details</md-button>
+				<md-button ng-click="ShowContact = true" ng-show="!ShowContact">Contact</md-button>
+				<md-button ng-click="ShowAdmin = true" ng-show="!ShowAdmin">Admin</md-button>
+				<md-button ng-click="ShowAdmin = false" ng-show="ShowAdmin">Close</md-button>
+			</div>
+
+			<div class="classified-admin" ng-if="ShowAdmin">
+				<h3>Admin</h3>
 				<div layout="row">
-					<md-button ng-click="ShowContact = false" ng-show="ShowContact">Details</md-button>
-					<md-button ng-click="ShowContact = true" ng-show="!ShowContact">Contact</md-button>
-					<md-button ng-click="ShowAdmin = true" ng-show="!ShowAdmin">Admin</md-button>
-					<md-button ng-click="ShowAdmin = false" ng-show="ShowAdmin">Close</md-button>
+					<md-button ng-click="vm.editClassified(classified)" class="md-primary">Edit</md-button> 
+					<!--classified will be same classified object being iterated over in the ng-repeat loop -->
+					<md-button ng-click="vm.deleteClassified($event, classified)" class="md-warn">Delete</md-button>
+					<!-- $event comes from ng-repeat and passes information about the trigger event -->
 				</div>
+			</div>
 
-				<div class="classified-admin" ng-if="ShowAdmin">
-					<h3>Admin</h3>
-					<div layout="row">
-						<md-button ng-click="vm.editClassified(classified)" class="md-primary">Edit</md-button> 
-						<!--classified will be same classified object being iterated over in the ng-repeat loop -->
-						<md-button ng-click="vm.deleteClassified($event, classified)" class="md-warn">Delete</md-button>
-						<!-- $event comes from ng-repeat and passes information about the trigger event -->
-					</div>
-				</div>
-
-			</md-card-content>
-		</md-card>
-	</md-content>
+		</md-card-content>
+	</md-card>
+</md-content>
