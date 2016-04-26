@@ -1,6 +1,7 @@
 [
 
 	{
+		"id":1,
 		"title":"Intense Mas Band",
 		"price":500,
 		"description":"Hosted by DJ Rusty G, Team Soca and Vibe 103",
@@ -14,6 +15,7 @@
 	},
 
 	{
+		"id":2,
 		"title":"Nova Mas Intl",
 		"price":1500,
 		"description":"Hosted by Unknown Artists",
@@ -27,6 +29,7 @@
 	},
 
 	{
+		"id":3,
 		"title":"CodeRed",
 		"price":2500,
 		"description":"Hosted by King Bubba & Lyrikal",
