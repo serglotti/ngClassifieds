@@ -34,7 +34,7 @@
 					// establishes default contact for use with any newly created classifieds ad
 					classified.contact = "Sergio L"
 
-					// we use $emit to send the new classified object to the parent controller (classifieds.ctr.js)
+					// we use $emit to send the new classified object to the parent controller (classifieds.ctr.js $on)
 					$scope.$emit('newClassified', classified);
 					vm.sidenavOpen = false;
 				}
