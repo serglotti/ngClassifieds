@@ -44,39 +44,6 @@
 
 <ui-view></ui-view>
 
-<md-content class="md-padding" layout="row" layout-wrap>
-	<md-card ng-repeat="classified in vm.classifieds | filter: classifiedsFilter | filter: category" flex="30" class="classified" > <!-- added filter 07-005 -->
-		<img ng-src=" {{ classified.image }} ">
-		<md-card-content>
-
-			<div class="classified-info" ng-show="!ShowContact">
-				<h2 class="md-title"> {{ classified.title }}</h2>
-				<h3> {{ classified.price | currency }} </h3>
-				<p> {{ classified.description }} </p>
-				<!-- <pre> {{ classified | json }} </pre> -->
-			</div>
-
-			<div class="classified-contact" ng-show="ShowContact">
-				<p><md-icon class="mdi mdi-account"></md-icon> {{ classified.contact }}</p>
-			</div>
-
-			<div layout="row">
-				<md-button ng-click="ShowContact = false" ng-show="ShowContact">Details</md-button>
-				<md-button ng-click="ShowContact = true" ng-show="!ShowContact">Contact</md-button>
-				<md-button ng-click="ShowAdmin = true" ng-show="!ShowAdmin">Admin</md-button>
-				<md-button ng-click="ShowAdmin = false" ng-show="ShowAdmin">Close</md-button>
-			</div>
-
-			<div class="classified-admin" ng-if="ShowAdmin">
-				<h3>Admin</h3>
-				<div layout="row">
-					<md-button ng-click="vm.editClassified(classified)" class="md-primary">Edit</md-button> 
-					<!--classified will be same classified object being iterated over in the ng-repeat loop -->
-					<md-button ng-click="vm.deleteClassified($event, classified)" class="md-warn">Delete</md-button>
-					<!-- $event comes from ng-repeat and passes information about the trigger event -->
-				</div>
-			</div>
-
-		</md-card-content>
-	</md-card>
+<md-content>
+	<classified-card class="md-padding" layout="row" layout-wrap></classified-card>
 </md-content>
